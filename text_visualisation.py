@@ -13,7 +13,7 @@ import cufflinks as cf
 from sklearn.feature_extraction.text import CountVectorizer
 
 text = st.text_area("Text Box")
-option = st.multiselect("Select the option", ("Uni-Gram","Bi-Grams", "Tri-Grams"))
+# option = st.multiselect("Select the option", ("Uni-Gram","Bi-Grams", "Tri-Grams"))
 res = st.button("Submit")
 
 def get_num_words_per_sample(text):
@@ -60,29 +60,29 @@ def get_top_n_trigram(corpus, n=None):
     words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
     return words_freq[:n]
 
-def options(option):
-        if "Uni-Gram" in option:
-            common_words = get_top_n_words([text], 50)
+def options():
+        # if "Uni-Gram" in option:
+            common_words = get_top_n_words([text], 20)
             for word, freq in common_words:
                 print(word, freq)
             df1 = pd.DataFrame(common_words, columns = ['ReviewText' , 'count'])
-            fig = df1.groupby('ReviewText').sum()['count'].sort_values(ascending=False).iplot(asFigure=True, kind='bar', yTitle='Count', linecolor='black', title='Top 50 words in review')
+            fig = df1.groupby('ReviewText').sum()['count'].sort_values(ascending=False).iplot(asFigure=True, kind='bar', yTitle='Count', linecolor='black', title='Top 20 words in review for Uni-Gram')
             st.plotly_chart(fig)
-        if "Bi-Gram" in option:
-            common_words = get_top_n_bigram([text], 50)
+        # if "Bi-Grams" in option:
+            common_words = get_top_n_bigram([text], 20)
             for word, freq in common_words:
                 print(word, freq)
             df1 = pd.DataFrame(common_words, columns = ['ReviewText' , 'count'])
-            st.write(df1.head())
-            fig = df1.groupby('ReviewText').sum()['count'].sort_values(ascending=False).iplot(asFigure=True, kind='bar', yTitle='Count', linecolor='black', title='Top 50 words in review')
+            # st.write(df1.head())
+            fig = df1.groupby('ReviewText').sum()['count'].sort_values(ascending=False).iplot(asFigure=True, kind='bar', yTitle='Count', linecolor='black', title='Top 20 words in review for Bi-Grams')
             st.plotly_chart(fig)
 
-        if "Tri-Gram" in option:
-            common_words = get_top_n_trigram([text], 50)
+        # if "Tri-Grams" in option:
+            common_words = get_top_n_trigram([text], 20)
             for word, freq in common_words:
                 print(word, freq)
             df1 = pd.DataFrame(common_words, columns = ['ReviewText' , 'count'])
-            fig = df1.groupby('ReviewText').sum()['count'].sort_values(ascending=False).iplot(asFigure=True, kind='bar', yTitle='Count', linecolor='black', title='Top 50 words in review')
+            fig = df1.groupby('ReviewText').sum()['count'].sort_values(ascending=False).iplot(asFigure=True, kind='bar', yTitle='Count', linecolor='black', title='Top 20 words in review for Tri-Grams')
             st.plotly_chart(fig)    
     # st.write(get_num_words_per_sample(text))
 
@@ -96,4 +96,4 @@ if res:
     plt.show()
     st.pyplot()
     st.set_option('deprecation.showPyplotGlobalUse', False)
-    options(option)
+    options()
