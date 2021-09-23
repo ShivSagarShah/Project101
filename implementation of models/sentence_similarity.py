@@ -5,7 +5,6 @@ import streamlit as st
 import pandas as pd
 def similar(sentences):
     model = SentenceTransformer('sentence-transformers/paraphrase-xlm-r-multilingual-v1')
-    # sentences = st.text_area("Text Box")
     sentences = sentences.split("\n")
     embeddings = model.encode(sentences)
     data = []

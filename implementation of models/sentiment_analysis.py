@@ -32,18 +32,6 @@ def sentiment(text):
     output = model(**encoded_input)
     scores = output[0][0].detach().numpy()
     scores = softmax(scores)
-
-    # # TF
-    # model = TFAutoModelForSequenceClassification.from_pretrained(MODEL)
-    # model.save_pretrained(MODEL)
-
-    # text = "Good night 😊"
-    # encoded_input = tokenizer(text, return_tensors='tf')
-    # output = model(encoded_input)
-    # scores = output[0][0].numpy()
-    # scores = softmax(scores)
-
-    # Print labels and scores
     ranking = np.argsort(scores)
     ranking = ranking[::-1]
     response = {"Sentiment": [], "Probability": []}
@@ -54,18 +42,3 @@ def sentiment(text):
         response["Probability"].append(np.round(float(s), 4))
     df = pd.DataFrame(response)
     return df
-
-
-# # from textblob import TextBlob
-# # import streamlit as st
-# # y = st.text_area("Type your sentence: ")
-# # res = st.button("Submit")
-# # if res:
-# #     edu = TextBlob(y)
-# #     x = edu.sentiment.polarity
-# #     if x<0:
-# #         st.write("Negative")
-# #     elif x == 0:
-# #         st.write("Neutral")    
-# #     elif x>0 and x<=1:
-# #         st.write("Positive")
